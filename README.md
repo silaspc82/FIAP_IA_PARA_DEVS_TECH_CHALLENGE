@@ -12,7 +12,7 @@ https://www.kaggle.com/datasets/mirichoi0218/insurance
 ### Grupo 12
 #### Componentes
 * Silas Pereira Costa - RM355822
-* Wesley Gomes Santos - RM
+* Wesley Gomes Santos - RM355677
 
 
 

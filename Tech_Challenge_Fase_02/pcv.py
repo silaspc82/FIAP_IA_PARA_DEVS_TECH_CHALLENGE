@@ -2,12 +2,11 @@ import pygame
 from pygame.locals import *
 import random
 import itertools
-from genetic_algorithm import mutate, order_crossover, generate_random_population, calculate_fitness, sort_population, default_problems
-from draw_functions import draw_paths, draw_plot, draw_cities
+from modulos_ag.genetic_algorithm import mutate, order_crossover, generate_random_population, calculate_fitness, sort_population, default_problems
+from modulos_ag.draw_functions import draw_paths, draw_plot, draw_cities
 import sys
 import numpy as np
-import pygame
-from benchmark_att48 import *
+from modulos_ag.benchmark_att48 import *
 
 
 # Define constant values

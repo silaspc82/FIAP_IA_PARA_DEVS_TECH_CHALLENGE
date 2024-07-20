@@ -184,8 +184,7 @@ if __name__ == '__main__':
     POPULATION_SIZE = 100
     N_GENERATIONS = 100
     MUTATION_PROBABILITY = 0.3
-    cities_locations = [(random.randint(0, 100), random.randint(0, 100))
-              for _ in range(N_CITIES)]
+    cities_locations = [(random.randint(0, 100), random.randint(0, 100)) for _ in range(N_CITIES)]
     
     # CREATE INITIAL POPULATION
     population = generate_random_population(cities_locations, POPULATION_SIZE)
@@ -195,8 +194,6 @@ if __name__ == '__main__':
     best_solutions = []
     
     for generation in range(N_GENERATIONS):
-  
-        
         population_fitness = [calculate_fitness(individual) for individual in population]    
         
         population, population_fitness = sort_population(population,  population_fitness)
@@ -224,9 +221,5 @@ if __name__ == '__main__':
             
             new_population.append(child1)
             
-    
         print('generation: ', generation)
         population = new_population
-    
-
-

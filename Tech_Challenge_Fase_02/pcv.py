@@ -84,11 +84,9 @@ while running:
 
     screen.fill(WHITE)
 
-    population_fitness = [calculate_fitness(
-        individual) for individual in population]
+    population_fitness = [calculate_fitness(individual) for individual in population]
 
-    population, population_fitness = sort_population(
-        population,  population_fitness)
+    population, population_fitness = sort_population(population,  population_fitness)
 
     best_fitness = calculate_fitness(population[0])
     best_solution = population[0]

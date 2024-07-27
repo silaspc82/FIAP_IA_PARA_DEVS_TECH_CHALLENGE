@@ -1,6 +1,10 @@
 import csv
+import os
 
 class FabricaDados:
+    #Descomentar para DEBUG no ambiente local
+    debugPath = f'{os.getcwd()}/Tech_Challenge_Fase_02/ladrao-de-cidades'
+
     def __init__(self):
         self.viagens = self.gerar_dic_viagens()
         self.cidades = self.gerar_lista_cidades()
@@ -8,7 +12,7 @@ class FabricaDados:
 
     def gerar_dic_viagens(self):
         viagens = {}
-        with open('cidades.csv', encoding='utf-8') as csvfile:
+        with open(f'{self.debugPath}/cidades.csv', encoding='utf-8') as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
                 cidade_origem, cidade_destino, tempo, custo = row
@@ -28,7 +32,7 @@ class FabricaDados:
 
     def gerar_lista_cidades(self):
         cidades = []
-        with open('cidades.csv', encoding='utf-8') as csvfile:
+        with open(f'{self.debugPath}/cidades.csv', encoding='utf-8') as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
                 cidade_origem, cidade_destino, dist, valor = row
@@ -38,7 +42,7 @@ class FabricaDados:
 
     def gerar_dic_items(self):
         items = {}
-        with open('items.csv', encoding='utf-8') as csvfile:
+        with open(f'{self.debugPath}/items.csv', encoding='utf-8') as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
                 item, peso, tempo, valor, cidade = row

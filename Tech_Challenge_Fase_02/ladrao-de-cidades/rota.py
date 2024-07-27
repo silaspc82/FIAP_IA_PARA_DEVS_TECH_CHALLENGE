@@ -189,7 +189,6 @@ class Rota():
 
 
     def fitness(self):
-
         # Verifica:
         #   - Se a primeira cidade é Escondidos
         #   - Se Escondidos aparece pelo menos duas vezes

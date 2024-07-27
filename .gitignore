@@ -1,3 +1,5 @@
 .DS_Store
 Tech_Challenge_Fase_01/venv/*
 Tech_Challenge_Fase_02/venv/*
+*__pycache__*
+Tech_Challenge_Fase_01/Base_de_dados/insurance.csv

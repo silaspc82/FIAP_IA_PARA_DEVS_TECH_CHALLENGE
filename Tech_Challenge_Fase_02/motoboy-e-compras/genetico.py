@@ -3,7 +3,7 @@ import sys
 import matplotlib.pyplot as plt
 from gera_grafico import plotar_grafico
 
-GERACOES_MAXIMAS = 1000
+GERACOES_MAXIMAS = 100
 class Genetico:
 
     def __init__(self, populacao, geracoes_maximas=GERACOES_MAXIMAS):

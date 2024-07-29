@@ -61,8 +61,8 @@ class Caminho():
         indice = random.randint(0, len(caminho) - 2)
         caminho[indice], caminho[indice +
                                     1] = self.caminho[indice+1], self.caminho[indice]
-        self.caminho = caminho
-        return self
+        
+        return Caminho(self.dados, caminho)
 
     def gerarRelatorio(self):
         super_mercados_visitados = self.caminho
@@ -107,7 +107,7 @@ class Caminho():
         return total
 
     def eficiencia(self):
-        return self.valor_total() * 10000 + self.calcular_tempo_caminho()
+        return self.valor_total() * 10000 + self.calcular_tempo_total()
 
     def caminho_valido(self):
         if self.caminho[0] == self.caminho[1]:

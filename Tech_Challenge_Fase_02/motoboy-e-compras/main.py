@@ -9,5 +9,4 @@ melhor_caminho = geneticos.executar()
 print("\nMelhor caminho:")
 print(f"Gerações: {geneticos.qtd_geracao()}")
 melhor_caminho.gerarRelatorio()
-
-
+geneticos.gerarGrafico()

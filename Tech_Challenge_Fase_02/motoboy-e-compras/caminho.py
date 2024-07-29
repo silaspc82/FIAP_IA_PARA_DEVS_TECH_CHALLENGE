@@ -4,7 +4,7 @@ from dados import Dados
 from decimal import *
 from exceptions import TempoDecorridoException, PesoException, SuperMercadoSemCompraException, FitValidacaoException
 
-QTD_SUPERMERCADOS_LISTA = 4
+QTD_SUPERMERCADOS_LISTA = 8
 
 
 class Caminho():
@@ -54,15 +54,14 @@ class Caminho():
         return super_mercados[0:QTD_SUPERMERCADOS_LISTA]
 
     def mutacao(self):
-        if random.random() >= 0.6:
-            if len(self.caminho) <= 2:
-                return self
+        if len(self.caminho) <= 2:
+            return self
 
-            caminho = self.caminho[:]
-            indice = random.randint(0, len(caminho) - 2)
-            caminho[indice], caminho[indice +
-                                     1] = self.caminho[indice+1], self.caminho[indice]
-            self.caminho = caminho
+        caminho = self.caminho[:]
+        indice = random.randint(0, len(caminho) - 2)
+        caminho[indice], caminho[indice +
+                                    1] = self.caminho[indice+1], self.caminho[indice]
+        self.caminho = caminho
         return self
 
     def gerarRelatorio(self):
@@ -80,8 +79,7 @@ class Caminho():
                             produto['produto']['peso'], produto['produto']['valor']]
                     )
 
-        string = f"Fitness: {self.fit_caminho}\nStatus: {self.status}\nPreço total: R$ {self.valor_total(
-        )}\nPeso total: {self.peso_total}g\nTempo: {self.tempo_caminho}min\nCaminho e itens comprados:"
+        string = f"Fitness: {self.fit_caminho}\nStatus: {self.status}\nPreço total: R$ {self.valor_total()}\nPeso total: {self.peso_total}g\nTempo: {self.tempo_caminho}min\nCaminho e itens comprados:"
         print(string)
         print(tabulate.tabulate(tabela, headers=headers, tablefmt='fancy_grid'))
 

@@ -14,6 +14,21 @@ FIAP_IA_PARA_DEVS_TECH_CHALLENGE/Tech_Challenge_Fase_02/
 * Silas Pereira Costa - RM355822
 * Wesley Gomes Santos - RM355677
 
+## Definição do Problema
+
+### A empresa SIA iria realizar uma confraternização de fim de ano para os seus funcionários e precisava comprar os itens para o evento da forma mais otimizada e com o menor custo possível. 
+### Para isso, contratou um motoboy para realizar a compra dos itens, passando por alguns super mercados da região, buscando o menor preço e no menor tempo possíve, pois o evento seria no dia seguinte. 
+### Para o motoboy conseguir atender e rentabilizar mais o seu retorno, deve realizar a rota mais otimizada para economizar no combustível e no tempo entre os supermercados para verificar os preços.
+### A capacidade da moto é de 40kg e ele só poderá realizar uma única viagem.
+
+## Testes e Resultados: 
+
+### Testes para demonstrar a eficácia do algoritmo. Compare os resultados obtidos com métodos de solução convencionais.
+
+## Documentação: 
+
+### Forneça uma documentação completa do projeto, incluindo descrição do problema, detalhes da implementação do algoritmo, análises de resultados e conclusões.
+
 
 #### Execução:
 Faça o clone do projeto em um diretório a sua escolha
@@ -31,7 +46,3 @@ $ python3 -m venv ~/PythonProjects/virtualenvs/venvIAParaDEVS_python3
 $ source ~/PythonProjects/virtualenvs/venvIAParaDEVS_python3/bin/activate
 
 $ pip install -r requirements.txt
-
-## O problema
-Introdução ao problema
-A AIC (Agência internacional do crime) propõe a Joana, o desafio de realizar roubos em várias cidades em apenas 72 horas. Joana deve viajar discretamente usando transporte coletivo pago e carregando os itens roubados em uma mochila de até 20 kg. Cada cidade possui um item valioso para ser roubado, mas cada roubo leva tempo para ser concluído. Além disso, as viagens entre as cidades têm um custo financeiro e levam tempo. Se ela conseguir roubar a quantidade máxima de itens, deverá retornar à sede da AIC na cidade Escondidos para receber seu prêmio.

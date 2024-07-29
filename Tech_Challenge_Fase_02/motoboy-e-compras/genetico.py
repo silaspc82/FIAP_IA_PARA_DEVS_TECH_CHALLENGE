@@ -1,9 +1,9 @@
 from exceptions import PopulacaoInexistenteException
 import sys
+import matplotlib.pyplot as plt
+from gera_grafico import plotar_grafico
 
-GERACOES_MAXIMAS = 100
-
-
+GERACOES_MAXIMAS = 1000
 class Genetico:
 
     def __init__(self, populacao, geracoes_maximas=GERACOES_MAXIMAS):
@@ -44,7 +44,16 @@ class Genetico:
                 self.geracao += 1
 
                 if self.geracao % 50 == 0:
-                    print(f"Geração: {self.geracao}\nFit: \n{
-                          melhor_caminho_anterior}\n\n")
+                    print(f"Geração: {self.geracao}\nFit: \n{melhor_caminho_anterior}\n\n")
 
         return melhor_caminho_anterior
+
+    def gerarGrafico(self):
+        geracoes = len(self.evolucao)
+        tamanho_da_populacao = geracoes #len(self.evolucao[0])
+
+        for caminho in range(tamanho_da_populacao):
+            fitness_individuo = [self.evolucao[caminho].fit_caminho for geracao in range(geracoes)]
+            plt.scatter(range(geracoes), fitness_individuo, s=10)
+
+        plotar_grafico(x=range(1, geracoes+1), y=fitness_individuo, x_label='Gerações', y_label='Fitness')

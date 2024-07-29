@@ -1,11 +1,8 @@
-Modelagem do EP
+## Modelagem do Problema
 
-Gene 
-	Cada cidade da rota
+### Gene: Cada cidade da rota
 
-Indivíduo
-	Rota (lembrando que começa e termina no mesmo lugar
-	(Listar todas as cidades mas olhar só até onde a primeira repetir para ter um tamanho fixo de lista. Isso vai melhorar a mutação e etcetcetc)
+### Indivíduo: Rota (lembrando que começa e termina no mesmo lugar) Lista dos mercadosmas olhar só até onde a primeira repetir para ter um tamanho fixo de lista. Isso vai melhorar a mutação e etcetcetc)
 
 Fitness
 	(lembrando que temos tempo limite de 72h)

@@ -2,7 +2,9 @@ import tabulate
 import random
 from dados import Dados
 from decimal import *
-from exceptions import TempoDecorridoException, PesoException
+from exceptions import TempoDecorridoException, PesoException, SuperMercadoSemCompraException, FitValidacaoException
+
+QTD_SUPERMERCADOS_LISTA = 4
 
 
 class Caminho():
@@ -15,22 +17,44 @@ class Caminho():
         self.fit_caminho = 0
         self.status = True
         if not self.caminho:
-            self.caminho = self.gerar_rota_super_mercado()
-        try:
-            self.fitness()
-        except TempoDecorridoException as e:
-            pass
+            tentar_novamente = True
+            qtd_tentativas = 50
+            while tentar_novamente and qtd_tentativas > 0:
+                tentar_novamente = False
+                self.caminho = self.gerar_rota_super_mercado()
+                try:
+                    self.fitness()
+                except FitValidacaoException as e:
+                    tentar_novamente = True
+                    qtd_tentativas -= 1
+
+                if not self.status and not tentar_novamente:
+                    tentar_novamente = True
+                    qtd_tentativas -= 1
+        else:
+            try:
+                self.fitness()
+            except FitValidacaoException as e:
+                pass
 
     def __str__(self):
-        return f"fitness caminho: {self.fit_caminho}\ncaminho: {self.caminho}\npeso produto: {self.peso_total}g\ntempo caminho: {self.tempo_caminho}min"
+        return f"Fitness caminho: {self.fit_caminho}\nCaminho: {self.caminho}\nPreço produto: R$ {self.valor_total()}\nPeso produto: {self.peso_total}g\nTempo caminho: {self.tempo_caminho}min"
 
     def gerar_rota_super_mercado(self):
+        if QTD_SUPERMERCADOS_LISTA % 2 != 0:
+            raise Exception(
+                "gerar_rota_super_mercado(): QTD_SUPERMERCADOS_LISTA precisa ser um número par.")
+        if QTD_SUPERMERCADOS_LISTA > len(list(self.dados.lista_super_mercados.keys())):
+            raise Exception(
+                "gerar_rota_super_mercado(): QTD_SUPERMERCADOS_LISTA precisa ser menor que o número de supermercados existente.")
+
         super_mercados = list(self.dados.lista_super_mercados.keys())
         random.shuffle(super_mercados)
-        return super_mercados
+
+        return super_mercados[0:QTD_SUPERMERCADOS_LISTA]
 
     def mutacao(self):
-        if random.random() > 0.6:
+        if random.random() >= 0.6:
             if len(self.caminho) <= 2:
                 return self
 
@@ -56,8 +80,8 @@ class Caminho():
                             produto['produto']['peso'], produto['produto']['valor']]
                     )
 
-        string = f"Fitness: {self.fit_caminho}\nStatus: {self.status}\nPeso total: {
-            self.peso_total}g\nTempo: {self.tempo_caminho}min\nCaminho e itens comprados:"
+        string = f"Fitness: {self.fit_caminho}\nStatus: {self.status}\nPreço total: R$ {self.valor_total(
+        )}\nPeso total: {self.peso_total}g\nTempo: {self.tempo_caminho}min\nCaminho e itens comprados:"
         print(string)
         print(tabulate.tabulate(tabela, headers=headers, tablefmt='fancy_grid'))
 
@@ -85,7 +109,7 @@ class Caminho():
         return total
 
     def eficiencia(self):
-        return self.valor_total()
+        return self.valor_total() * 10000 + self.calcular_tempo_caminho()
 
     def caminho_valido(self):
         if self.caminho[0] == self.caminho[1]:
@@ -140,6 +164,22 @@ class Caminho():
 
         return total
 
+    def identificar_super_mercado_sem_compra(self, mapa_caminho_por_produto={}):
+        if not mapa_caminho_por_produto:
+            mapa_caminho_por_produto = self.procurar_produtos_baratos_caminho()
+
+        encontrou_supermercado = False
+        for super_mercado in self.caminho:
+            encontrou_supermercado = False
+            for produto in mapa_caminho_por_produto.values():
+                if super_mercado == produto['super_mercado']['nome']:
+                    encontrou_supermercado = True
+                    break
+            if not encontrou_supermercado:
+                return True
+
+        return encontrou_supermercado
+
     def fitness(self):
         if not self.caminho_valido():
             self.fit_caminho = Decimal(99999999999)
@@ -153,6 +193,11 @@ class Caminho():
         if self.calcular_tempo_total() > 60:
             self.status = False
             raise TempoDecorridoException('Tempo percorrido maior que 60')
+
+        # if self.identificar_super_mercado_sem_compra():
+        #     self.status = False
+        #     # raise SuperMercadoSemCompraException('Supermercado sem compra encontrado.')
+        #     return False
 
         self.status = True
         self.fit_caminho = self.eficiencia()

@@ -1,9 +1,14 @@
-class TempoDecorridoException(Exception):
+class FitValidacaoException(Exception):
     pass
 
-class PopulacaoInexistenteException(Exception):
+class TempoDecorridoException(FitValidacaoException):
     pass
 
+class PopulacaoInexistenteException(FitValidacaoException):
+    pass
 
-class PesoException(Exception):
+class PesoException(FitValidacaoException):
+    pass
+
+class SuperMercadoSemCompraException(FitValidacaoException):
     pass

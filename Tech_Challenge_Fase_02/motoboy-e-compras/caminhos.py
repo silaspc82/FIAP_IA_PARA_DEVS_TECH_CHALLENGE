@@ -14,6 +14,7 @@ class Caminhos():
 
         for i in range(self.quantidade_supermercados_caminho):
             self.populacao.append(Caminho(dados))
+        
 
     def mutacao(self):
         mutacoes = []

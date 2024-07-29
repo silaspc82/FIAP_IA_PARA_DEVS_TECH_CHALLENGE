@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 from exceptions import PopulacaoInexistenteException
 import sys
 
@@ -44,7 +43,7 @@ class Genetico:
 
                 self.geracao += 1
 
-                if self.geracao % 10 == 0:
+                if self.geracao % 50 == 0:
                     print(f"Geração: {self.geracao}\nFit: \n{
                           melhor_caminho_anterior}\n\n")
 

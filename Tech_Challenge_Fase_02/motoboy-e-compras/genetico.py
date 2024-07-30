@@ -50,10 +50,7 @@ class Genetico:
 
     def gerarGrafico(self):
         geracoes = len(self.evolucao)
-        tamanho_da_populacao = geracoes #len(self.evolucao[0])
 
-        for caminho in range(tamanho_da_populacao):
-            fitness_individuo = [self.evolucao[caminho].fit_caminho for geracao in range(geracoes)]
-            plt.scatter(range(geracoes), fitness_individuo, s=10)
+        fitness_individuo = [self.evolucao[geracao].fit_caminho for geracao in range(geracoes)]
 
         plotar_grafico(x=range(1, geracoes+1), y=fitness_individuo, x_label='Gerações', y_label='Fitness')

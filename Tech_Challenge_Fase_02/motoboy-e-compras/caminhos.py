@@ -6,7 +6,7 @@ import sys
 
 class Caminhos():
     def __init__(self, dados):
-        self.quantidade_supermercados_caminho = 10
+        self.quantidade_supermercados_caminho = 80
         self.dados = dados
         self.populacao = []
 
@@ -14,6 +14,10 @@ class Caminhos():
 
         for i in range(self.quantidade_supermercados_caminho):
             self.populacao.append(Caminho(dados))
+
+        
+        for caminhos in self.populacao:
+            print(f'\ncaminhos  >>> {caminhos}\n')
         
 
     def mutacao(self):

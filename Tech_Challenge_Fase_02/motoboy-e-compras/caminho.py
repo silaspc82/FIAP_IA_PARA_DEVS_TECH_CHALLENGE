@@ -38,7 +38,7 @@ class Caminho():
                 pass
 
     def __str__(self):
-        return f"Fitness caminho: {self.fit_caminho}\nCaminho: {self.caminho}\nPreço produto: R$ {self.valor_total()}\nPeso produto: {self.peso_total}g\nTempo caminho: {self.tempo_caminho}min"
+        return f"Fitness caminho: {self.fit_caminho}\nStatus: {self.status}\nCaminho: {self.caminho}\nPreço produto: R$ {self.valor_total()}\nPeso produto: {self.peso_total}g\nTempo caminho: {self.tempo_caminho}min"
 
     def gerar_rota_super_mercado(self):
         if QTD_SUPERMERCADOS_LISTA % 2 != 0:
@@ -61,8 +61,9 @@ class Caminho():
         indice = random.randint(0, len(caminho) - 2)
         caminho[indice], caminho[indice +
                                     1] = self.caminho[indice+1], self.caminho[indice]
+        self.caminho = caminho
         
-        return Caminho(self.dados, caminho)
+        return self
 
     def gerarRelatorio(self):
         super_mercados_visitados = self.caminho
@@ -107,17 +108,7 @@ class Caminho():
         return total
 
     def eficiencia(self):
-        return self.valor_total() * 10000 + self.calcular_tempo_total()
-
-    def caminho_valido(self):
-        if self.caminho[0] == self.caminho[1]:
-            return False
-
-        caminho_sem_primeiro_supermercado = self.caminho[1:]
-        if len(caminho_sem_primeiro_supermercado) != len(set(caminho_sem_primeiro_supermercado)):
-            return False
-
-        return True
+        return self.calcular_tempo_total() + self.valor_total()
 
     def get_peso_total(self, mapa_caminho_por_produto={}):
         if not mapa_caminho_por_produto:
@@ -179,18 +170,13 @@ class Caminho():
         return encontrou_supermercado
 
     def fitness(self):
-        if not self.caminho_valido():
-            self.fit_caminho = Decimal(99999999999)
-            self.status = False
-            return False
-
         if self.get_peso_total() > 40000:
             self.status = False
             raise PesoException('Peso total maior que 40000')
 
-        if self.calcular_tempo_total() > 60:
+        if self.calcular_tempo_total() > 100:
             self.status = False
-            raise TempoDecorridoException('Tempo percorrido maior que 60')
+            raise TempoDecorridoException('Tempo percorrido maior que 100')
 
         # if self.identificar_super_mercado_sem_compra():
         #     self.status = False

@@ -6,7 +6,7 @@ import sys
 
 class Caminhos():
     def __init__(self, dados):
-        self.quantidade_supermercados_caminho = 80
+        self.quantidade_supermercados_caminho = 10
         self.dados = dados
         self.populacao = []
 
@@ -14,12 +14,7 @@ class Caminhos():
 
         for i in range(self.quantidade_supermercados_caminho):
             self.populacao.append(Caminho(dados))
-
         
-        for caminhos in self.populacao:
-            print(f'\ncaminhos  >>> {caminhos}\n')
-        
-
     def mutacao(self):
         mutacoes = []
         for caminho in self.populacao:
@@ -39,7 +34,6 @@ class Caminhos():
 
     def selecionar(self, populacao_a, populacao_b):
         total_pop = self.populacao + populacao_a + populacao_b
-
         
         populacao_ativa = [caminho for caminho in total_pop if (caminho.status)]
 
@@ -47,7 +41,7 @@ class Caminhos():
             raise PopulacaoInexistenteException("selecionar(): População ativa vazia. Execute novamente!")
 
         self.populacao = sorted(
-            populacao_ativa, key=lambda cmn: cmn.fit_caminho, reverse=False)[:15]
+            populacao_ativa, key=lambda cmn: cmn.fit_caminho, reverse=False)[:10]
 
     def cruzar(parente1, parente2):
         filho_1 = None

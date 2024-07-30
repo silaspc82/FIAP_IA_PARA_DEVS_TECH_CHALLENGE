@@ -1,26 +1,21 @@
 Modelagem do EP
 
 Gene 
-	Cada cidade da rota
+	Cada supermercado usado na compra.
 
 Indivíduo
-	Rota (lembrando que começa e termina no mesmo lugar
-	(Listar todas as cidades mas olhar só até onde a primeira repetir para ter um tamanho fixo de lista. Isso vai melhorar a mutação e etcetcetc)
+	Caminho.
+	Cada rota realizada para compra dos itens do evento.
 
 Fitness
-	(lembrando que temos tempo limite de 72h)
-	Temos que restringir indivíduos com mais de 72h de viagem  e peso total > 20kg (-inf)
-	Lucro (soma dos valores do roubo - custo de transporte)
-	(prof falou que gosta de colocar as limitações no fitness)
+	Tempo limite de 100 minutos.
+	Peso total < 40kg.
+	Eficiência: soma do tempo percorrido com o valor total da compra.
+	Quanto menor o tempo e o valor da compra, maior a eficiência.
 
 Mutação
-	muda dois itens aleatórios de lugar sem contar o primeiro item do array
-	[E, x, y, u, a, E, o, p, a]
-	também pode não colocar o primeiro E e, no fitness, calcular sabendo que começa em E
-	desse jeito, a mutação não faz papel de ambiente
+	Muda dois genes aleatórios de lugar em qualquer posição do indivíduo.
 
 Crossover
-	pega o menor indivíduo, divide pela metade.
-	Esse valor é o tamanho do corte no segundo indivíduo
-	faz o crossover
+	Modelo adotado para CrossOver: Ordered CrossOver 1
 

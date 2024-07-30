@@ -15,6 +15,9 @@ class Genetico:
     def qtd_geracao(self):
         return self.geracao
 
+    def qtd_evolucao(self):
+        return len(self.evolucao)
+
     def executar(self):
         melhor_caminho_anterior = None
         try:
@@ -42,6 +45,7 @@ class Genetico:
                     melhor_caminho_anterior = novo_melhor_caminho
 
                 self.geracao += 1
+                # print(f'self.geracao {self.geracao} - melhor_caminho_anterior.fit_caminho {melhor_caminho_anterior.fit_caminho}')
 
                 if self.geracao % 50 == 0:
                     print(f"Geração: {self.geracao}\nFit: \n{melhor_caminho_anterior}\n\n")
@@ -49,8 +53,6 @@ class Genetico:
         return melhor_caminho_anterior
 
     def gerarGrafico(self):
-        geracoes = len(self.evolucao)
-
         # fitness_individuo = [self.evolucao[geracao].fit_caminho for geracao in range(geracoes)]
 
         fitness_individuo = [caminho.fit_caminho for caminho in self.evolucao if caminho.status]

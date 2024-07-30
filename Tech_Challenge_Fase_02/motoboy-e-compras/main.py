@@ -7,6 +7,6 @@ geneticos = Genetico(Caminhos(Dados()))
 melhor_caminho = geneticos.executar()
 
 print("\nMelhor caminho:")
-print(f"Gerações: {geneticos.qtd_geracao()}")
+print(f"Gerações: {geneticos.qtd_evolucao()}")
 melhor_caminho.gerarRelatorio()
 geneticos.gerarGrafico()

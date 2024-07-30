@@ -54,6 +54,8 @@ class Caminho():
         return super_mercados[0:QTD_SUPERMERCADOS_LISTA]
 
     def mutacao(self):
+        novo_caminho = self
+        
         if random.random() > 0.7:
             if len(self.caminho) <= 2:
                 return self
@@ -62,12 +64,13 @@ class Caminho():
             indice = random.randint(0, len(caminho) - 2)
             caminho[indice], caminho[indice +
                                         1] = self.caminho[indice+1], self.caminho[indice]
-            self.caminho = caminho
+            
+            novo_caminho = Caminho(self.dados, caminho)
             try:
-                self.fitness()
+                novo_caminho.fitness()
             except FitValidacaoException as e:
                 pass
-        return self
+        return novo_caminho
 
     def gerarRelatorio(self):
         super_mercados_visitados = self.caminho

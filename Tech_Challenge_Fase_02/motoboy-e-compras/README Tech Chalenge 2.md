@@ -17,12 +17,15 @@ FIAP_IA_PARA_DEVS_TECH_CHALLENGE/Tech_Challenge_Fase_02/
 ## Definição do Problema
 
 ### A empresa SIA iria realizar uma confraternização de fim de ano para os seus funcionários e precisava comprar os itens para o evento da forma mais otimizada e com o menor custo possível. 
-### Para isso, contratou um motoboy para realizar a compra dos itens, passando por alguns super mercados da região, buscando o menor preço e no menor tempo possíve, pois o evento seria no dia seguinte. 
+### Para isso, contratou um motoboy para realizar a compra dos itens, passando por alguns super mercados da região, buscando o menor preço e no menor tempo possível, pois o evento seria no dia seguinte. 
 ### Para o motoboy conseguir atender e rentabilizar mais o seu retorno, deve realizar a rota mais otimizada para economizar no combustível e no tempo entre os supermercados para verificar os preços.
 ### A capacidade da moto é de 40kg e ele só poderá realizar uma única viagem.
+### O tempo limite da viagem é de 100 minutos.
 
 ## Testes e Resultados: 
 
+### Realizamos um teste com 100 gerações com 80 caminhos iniciais (indivíduos).
+### Podemos observar que o melhor resultado foi encontrado 
 ### Testes para demonstrar a eficácia do algoritmo. Compare os resultados obtidos com métodos de solução convencionais.
 
 ## Documentação: 

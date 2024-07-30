@@ -171,6 +171,15 @@ Funcionalidades:
     Efetua a impressão do melhor indivíduo (caminho).
 
 
+#### Apresentação dos resultados
+Ao executar o programa é informado no console do terminal uma descrição textual do melhor indivíduo (caminho) e as compras realizadas neste trajeto.
+Também é exibido ao final do programa um gráfico contendo a evolução dos melhores indivíduos no decorrer das gerações.
+
+
+#### Conclusão
+Este programa demonstra quão importante são os algorítmos genéticos na aplicação de problemas como o solucionado nesta documentação.
+
+
 #### Execução:
 Faça o clone do projeto em um diretório a sua escolha
 Instale o python 3.12 ou superior

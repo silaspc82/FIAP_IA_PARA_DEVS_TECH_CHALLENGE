@@ -1,4 +1,4 @@
-Modelagem do EP
+Modelagem do Projeto
 
 Gene 
 	Cada supermercado usado na compra.
@@ -17,5 +17,5 @@ Mutação
 	Muda dois genes aleatórios de lugar em qualquer posição do indivíduo.
 
 Crossover
-	Modelo adotado para CrossOver: Ordered CrossOver 1
+	Modelo adotado para CrossOver: Ordered Crossover (OX1).
 

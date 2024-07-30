@@ -28,7 +28,8 @@ O tempo limite da viagem é de 100 minutos.
 * Podemos observar que o melhor resultado foi encontrado 
 * Testes para demonstrar a eficácia do algoritmo. Compare os resultados obtidos com métodos de solução convencionais.
 
-![Testando](grafico_fitness.png)
+![Gráfico de Execução](grafico_fitness.png)
+![Tabelas com os Valores](resultado_fitness.png)
 
 ### Documentação: 
 

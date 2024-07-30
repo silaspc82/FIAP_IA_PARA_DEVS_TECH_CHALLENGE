@@ -59,9 +59,9 @@ Uma implementação de algorítmo genético com funcionalidades para tratar uma 
     * Efetua a impressão dos dados do melhor indivíduo (caminho).
 
 
-##### Detalhamento do código da solução:
+#### Detalhamento do código da solução:
 
-* ###### caminho.py
+##### caminho.py
 
 Contém a classe Caminho (indivíduo), que contém funcionalidades inerentes ao indivíduo.
 
@@ -80,7 +80,7 @@ Funcionalidades:
 
 * Cálculo do valor total (valor_total()): Efetua o somatório dos produtos mais baratos encontrados pelo caminho.
 
-* Cálculo da eficiência (eficiencia()): Efetua o cálculo da eficiência somando o o tempo total do caminho com o valor total.
+* Cálculo da eficiência (eficiencia()): Efetua o cálculo da eficiência somando o tempo total do caminho com o valor total das compras. Quanto menor o valor mais eficiente.
 
 * Cálculo do peso total (get_peso_total()): Somatório do peso dos produtos mais baratos selecionados.
 
@@ -97,7 +97,7 @@ Funcionalidades:
 * Cálculo do fitness (fitness()): Efetua a validação do caminho, modifica o status de validade e calcula a eficiência.
 
 
-* ###### caminhos.py
+##### caminhos.py
 
 Contém a classe Caminhos (população), que contém funcionalidades inerentes a população.
 
@@ -122,7 +122,7 @@ Funcionalidades:
 * Gerenciamento do crossover (crossover()): Gerencia o cruzamento da população.
 
 
-* ###### dados.py
+##### dados.py
 
 Contém a classe Dados, que contém funcionalidades do gerenciamentos dos dados da aplicação.
 
@@ -136,7 +136,7 @@ Funcionalidades:
 * Importador de produtos (gerar_lista_produtos()): Efetua a importação dos produtos contidos no arquivo produtos.csv e os mapeia por super mercados em um vetor de produtos.
 
 
-* ###### exceptions.py
+##### exceptions.py
 
 Contém as classes exceção de validação de fitness filhas da classe Exception. São elas: 
 
@@ -147,7 +147,7 @@ Contém as classes exceção de validação de fitness filhas da classe Exceptio
 * SuperMercadoSemCompraException(FitValidacaoException)
 
 
-* ###### genetico.py
+##### genetico.py
 
 Contém a classe Genetico, responsável pelo controle genético da população (caminhos).
 
@@ -163,9 +163,9 @@ Funcionalidades:
 * Geração de gráfico das gerações (gerarGrafico()): Efetua o gerenciamento do gráfico a ser gerado contendo os dados das gerações.
 
 
-* ###### main.py
-    Classe inicial responsável pelas chamadas iniciais às demais classes do projeto
-    Efetua a impressão do melhor indivíduo (caminho).
+##### main.py
+    * Classe inicial responsável pelas chamadas iniciais às demais classes do projeto
+    * Efetua a impressão do melhor indivíduo (caminho).
 
 
 #### Apresentação dos resultados
@@ -174,7 +174,7 @@ Também é exibido ao final do programa um gráfico contendo a evolução dos me
 
 
 #### Conclusão
-Este programa demonstra quão importante são os algorítmos genéticos na aplicação de problemas como o solucionado nesta documentação.
+Este programa demonstra quão importante são os algorítmos genéticos na aplicação de problemas como o solucionado nesta documentação, permitindo a otimização de processos com alto grau de complexidade.
 
 
 #### Execução:

@@ -43,12 +43,14 @@ Instale o python 3.12 ou superior
 #### Linux 
 * Se o python for 3.12 na distribuição por padrão:
 * * $ sudo apt install python3-venv 
+* * $ sudo apt install python3-pip
 * Senão:
 * * $ sudo apt install python3.12-full
 * * $ sudo apt install python3.12-venv
+* * $ sudo apt install python3.12-pip
 
-$ python3 -m venv ~/PythonProjects/virtualenvs/venvIAParaDEVS_python3
+$ python3 -m venv FIAP_IA_PARA_DEVS_TECH_CHALLENGE/Tech_Challenge_Fase_02/venv
 
-$ source ~/PythonProjects/virtualenvs/venvIAParaDEVS_python3/bin/activate
+$ source FIAP_IA_PARA_DEVS_TECH_CHALLENGE/Tech_Challenge_Fase_02/venv/bin/activate
 
 $ pip install -r requirements.txt

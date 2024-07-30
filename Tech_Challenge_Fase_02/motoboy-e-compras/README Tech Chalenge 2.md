@@ -31,16 +31,16 @@ O tempo limite da viagem é de 100 minutos.
 ![Gráfico de Execução](grafico_fitness.png)
 ![Tabelas com os Valores](resultado_fitness.png)
 
-### Documentação: 
+### Documentação do Projeto: 
 
-#### Forneça uma documentação completa do projeto, incluindo descrição do problema, detalhes da implementação do algoritmo, análises de resultados e conclusões.
+Forneça uma documentação completa do projeto, incluindo descrição do problema, detalhes da implementação do algoritmo, análises de resultados e conclusões.
 
 
 #### Execução:
 Faça o clone do projeto em um diretório a sua escolha
 Instale o python 3.12 ou superior
 
-##### Linux 
+#### Linux 
 * Se o python for 3.12 na distribuição por padrão:
 * * $ sudo apt install python3-venv 
 * Senão:

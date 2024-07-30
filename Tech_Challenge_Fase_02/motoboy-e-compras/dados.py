@@ -5,8 +5,8 @@ import csv
 class Dados:
     #Descomentar para DEBUG no ambiente local
     # debugPath = f'{os.getcwd()}/Tech_Challenge_Fase_02/motoboy-e-compras'
-    # debugPath = f'{os.getcwd()}/motoboy-e-compras'
-    debugPath = f'{os.getcwd()}'
+    debugPath = f'{os.getcwd()}/motoboy-e-compras'
+    # debugPath = f'{os.getcwd()}'
 
     def __init__(self):
         self.lista_rotas_super_mercados = self.gerar_rotas_super_mercados()

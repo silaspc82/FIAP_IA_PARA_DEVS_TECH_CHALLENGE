@@ -6,9 +6,6 @@ Repositório dos techs challenges do grupo da pós graduação da FIAP IA para D
 ##### Caminho
 FIAP_IA_PARA_DEVS_TECH_CHALLENGE/Tech_Challenge_Fase_02/
 
-* Créditos:
-
-
 ### Grupo 12
 #### Componentes
 * Silas Pereira Costa - RM355822

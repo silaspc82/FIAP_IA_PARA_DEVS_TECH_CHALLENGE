@@ -1,7 +1,7 @@
 ### Modelagem do Projeto
 
 #### Gene 
-	* Cada supermercado usado na compra.
+	*Cada supermercado usado na compra.
 
 #### Indivíduo
 	* Caminho.

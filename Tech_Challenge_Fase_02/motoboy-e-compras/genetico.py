@@ -11,6 +11,7 @@ class Genetico:
         self.geracao = 0
         self.geracoes_maximas = geracoes_maximas
         self.evolucao = []
+        self.lista_geracao = []
 
     def qtd_geracao(self):
         return self.geracao
@@ -37,7 +38,7 @@ class Genetico:
                 self.populacao.selecionar(
                     mutacao_populacional, crossover_populacional)
 
-                self.evolucao += self.populacao.populacao
+                # self.evolucao += self.populacao.populacao
 
                 novo_melhor_caminho = self.populacao.top()
 
@@ -47,15 +48,16 @@ class Genetico:
                 self.geracao += 1
                 # print(f'self.geracao {self.geracao} - melhor_caminho_anterior.fit_caminho {melhor_caminho_anterior.fit_caminho}')
 
+                self.evolucao += [melhor_caminho_anterior]
+                self.lista_geracao += [self.geracao]
+
+                
+
                 if self.geracao % 50 == 0:
                     print(f"Geração: {self.geracao}\nFit: \n{melhor_caminho_anterior}\n\n")
 
         return melhor_caminho_anterior
 
     def gerarGrafico(self):
-        # fitness_individuo = [self.evolucao[geracao].fit_caminho for geracao in range(geracoes)]
-
         fitness_individuo = [caminho.fit_caminho for caminho in self.evolucao if caminho.status]
-
-        # plotar_grafico(x=range(0, geracoes), y=fitness_individuo, x_label='Gerações', y_label='Fitness')
-        plotar_grafico(x=range(0, len(fitness_individuo)), y=fitness_individuo, x_label='Gerações', y_label='Fitness')
+        plotar_grafico(x=self.lista_geracao, y=fitness_individuo, x_label='Gerações', y_label='Fitness')

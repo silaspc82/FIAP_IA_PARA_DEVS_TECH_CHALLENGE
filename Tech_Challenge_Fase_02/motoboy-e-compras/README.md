@@ -31,7 +31,7 @@ O tempo limite da viagem é de 100 minutos.
 ### Documentação do Projeto: 
 
 #### O código da Solução em Python
-Uma implementação de algorítmo genético com funcionalidades para tratar uma matriz de tempo entre cidades com o código de cruzamento Ordered Crossover (OX1) através da evolução entre indivíduos (caminhos) e elitismo.
+Uma implementação de algorítmo genético com funcionalidades para tratar uma matriz de tempo entre supermercados de uma cidade, com a finalidade de otimizar uma rota de compras. Foi utilizado o código de cruzamento Ordered Crossover (OX1) através da evolução entre indivíduos (caminhos) e elitismo.
 
 ##### Descrição de classes:
 
@@ -48,15 +48,15 @@ Uma implementação de algorítmo genético com funcionalidades para tratar uma 
     * Contém as exceções personalizadas utilizadas pelo projeto.
 
 * genetico.py 
-    * Gerenciador de funcionalidades genéticas, responsável pelo controle da evolução dos indivíduos (caminho)
-    * Controle da geração do gráfico de evolução das gerações.
+    * Gerenciador de funcionalidades do algorítmo genético, responsável pelo controle da evolução dos indivíduos (caminho)
+    * Geração do gráfico de evolução das gerações e do relatório com as informações processadas.
 
 * gera_grafico.py
     * Montagem do gráfico de evolução das gerações.
 
 * main.py
-    * Classe inicial responsável pelas chamadas iniciais às demais classes do projeto
-    * Efetua a impressão do melhor indivíduo (caminho).
+    * Classe inicial responsável pela execução do projeto
+    * Efetua a impressão dos dados do melhor indivíduo (caminho).
 
 
 ##### Detalhamento do código da solução:

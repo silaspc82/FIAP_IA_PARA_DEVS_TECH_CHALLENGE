@@ -30,7 +30,7 @@ class Genetico:
                 mutacao_populacional = self.populacao.mutacao()
 
                 crossover_populacional = self.populacao.crossover()
-
+                
                 self.populacao.selecionar(
                     mutacao_populacional, crossover_populacional)
 
@@ -51,6 +51,9 @@ class Genetico:
     def gerarGrafico(self):
         geracoes = len(self.evolucao)
 
-        fitness_individuo = [self.evolucao[geracao].fit_caminho for geracao in range(geracoes)]
+        # fitness_individuo = [self.evolucao[geracao].fit_caminho for geracao in range(geracoes)]
 
-        plotar_grafico(x=range(1, geracoes+1), y=fitness_individuo, x_label='Gerações', y_label='Fitness')
+        fitness_individuo = [caminho.fit_caminho for caminho in self.evolucao if caminho.status]
+
+        # plotar_grafico(x=range(0, geracoes), y=fitness_individuo, x_label='Gerações', y_label='Fitness')
+        plotar_grafico(x=range(0, len(fitness_individuo)), y=fitness_individuo, x_label='Gerações', y_label='Fitness')

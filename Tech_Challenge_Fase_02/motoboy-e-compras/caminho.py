@@ -8,9 +8,9 @@ QTD_SUPERMERCADOS_LISTA = 8
 
 
 class Caminho():
-    def __init__(self, dados: Dados, caminhho=None):
+    def __init__(self, dados: Dados, caminho=None):
 
-        self.caminho = caminhho
+        self.caminho = caminho
         self.dados = dados
         self.tempo_caminho = 0
         self.peso_total = 0
@@ -54,15 +54,19 @@ class Caminho():
         return super_mercados[0:QTD_SUPERMERCADOS_LISTA]
 
     def mutacao(self):
-        if len(self.caminho) <= 2:
-            return self
+        if random.random() > 0.7:
+            if len(self.caminho) <= 2:
+                return self
 
-        caminho = self.caminho[:]
-        indice = random.randint(0, len(caminho) - 2)
-        caminho[indice], caminho[indice +
-                                    1] = self.caminho[indice+1], self.caminho[indice]
-        self.caminho = caminho
-        
+            caminho = self.caminho[:]
+            indice = random.randint(0, len(caminho) - 2)
+            caminho[indice], caminho[indice +
+                                        1] = self.caminho[indice+1], self.caminho[indice]
+            self.caminho = caminho
+            try:
+                self.fitness()
+            except FitValidacaoException as e:
+                pass
         return self
 
     def gerarRelatorio(self):

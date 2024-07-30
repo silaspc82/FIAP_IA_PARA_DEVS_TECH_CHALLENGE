@@ -35,7 +35,7 @@ class Caminhos():
         if not populacao_ativa:
             raise PopulacaoInexistenteException("top(): População ativa vazia. Execute novamente!")
 
-        return sorted(populacao_ativa, key=lambda cmn: cmn.fit_caminho, reverse=True)[0]
+        return sorted(populacao_ativa, key=lambda cmn: cmn.fit_caminho, reverse=False)[0]
 
     def selecionar(self, populacao_a, populacao_b):
         total_pop = self.populacao + populacao_a + populacao_b
@@ -47,7 +47,7 @@ class Caminhos():
             raise PopulacaoInexistenteException("selecionar(): População ativa vazia. Execute novamente!")
 
         self.populacao = sorted(
-            populacao_ativa, key=lambda cmn: cmn.fit_caminho, reverse=True)[:10]
+            populacao_ativa, key=lambda cmn: cmn.fit_caminho, reverse=False)[:15]
 
     def cruzar(parente1, parente2):
         filho_1 = None

@@ -32,30 +32,39 @@ Na preparação dos dados do Dataset foram realizadas os seguintes operações p
    * Armazenar os dados limpos em uma lista de produtos.
    * Exclusão das linhas duplicadas
 
-Por fim, dividimos o arquivo, quebrando em arquivos menores com 100.000 linhas para agilizar o processamento no treinamento do 
-modelo.
+Por fim, dividimos o arquivo, quebrando em arquivos menores com 100.000 linhas para agilizar o processamento de fine-tuninng no treinamento do modelo.
 
-partes menores para facilitar o processamento e o fine-tuning
+### 2. Carregamento do Foundation Model:
 
-### 2. Chamada do Foundation Model:
 O modelo base selecionado para o treinamento foi LLaMA "unsloth/tinyllama-chat-bnb-4bit" e o tokenizer usando a biblioteca transformers. O tokenizer será responsável por tokenizar as perguntas e respostas para que o modelo possa processar.
 
-Foi usado o módulo FastLanguageModel da biblioteca Unsloth para carregar o modelo base do Hugging Face e setando parâmetros iniciais.
-
-A biblioteca FastLanguageModel é um módulo específico da Unsloth, projetada para otimizar o treinamento e a inferência de grandes modelos de linguagem. Ela facilita o fine-tuning de modelos como Llama e Mistral ao oferecer suporte para quantização de parâmetros e economia de memória, o que torna o processo mais rápido e eficiente.
-
-### 3. Execução do Fine-Tuning:
-Usando o módulo ***FastLanguageModel*** da biblioteca ***unsloth*** para carregar o modelo base do Hugging Face e setando parâmetros iniciais.
+Usando o módulo ***FastLanguageModel*** da biblioteca ***Unsloth*** para carregar o modelo base do Hugging Face e setar os parâmetros iniciais:
+* model_name: Nome do modelo pré-treinado a ser carregado (ex: “unsloth/Meta-Llama-3.1-8B-bnb-4bit”).
+* max_seq_length: Comprimento máximo de tokens que o modelo pode processar (ex: 2048).
+* load_in_4bit: Carrega o modelo quantizado em 4 bits, economizando memória e acelerando o processamento.
+* lora_alpha: Controla a regularização do ajuste LoRA (Low-Rank Adaptation).
+* lora_dropout: Taxa de dropout aplicada nas camadas LoRA, para evitar overfitting.
+* target_modules: Define quais partes do modelo serão otimizadas com LoRA (ex: “q_proj”, “v_proj”).
+* use_gradient_checkpointing: Ativa o checkpointing de gradiente para economizar memória durante o treinamento.
+* dtype: Define o tipo de dado a ser usado nas operações do modelo (ex: float16, bfloat16).
 
 A biblioteca ***FastLanguageModel*** é um módulo específico da Unsloth, projetada para otimizar o treinamento e a inferência de grandes modelos de linguagem. Ela facilita o fine-tuning de modelos como Llama e Mistral ao oferecer suporte para quantização de parâmetros e economia de memória, o que torna o processo mais rápido e eficiente.
 
+### 3. Execução do Fine-Tuning:
+
 Aplicando o método ***LoRA*** (Low-Rank Adaptation) e ***PEFT*** (Parameter-Efficient Fine-Tuning), que permitem treinar modelos grandes com um número muito menor de parâmetros atualizados, acelerando o treinamento e diminuindo os requisitos de memória.
+
+O método FastLanguageModel.get_peft_model(...) é usado para aplicar PEFT (Parameter-Efficient Fine-Tuning) a grandes modelos de linguagem, como Llama. O PEFT permite que apenas uma pequena parte do modelo seja ajustada durante o fine-tuning, economizando tempo e memória, especialmente útil quando o modelo tem bilhões de parâmetros.
+
+Principais recursos do PEFT:
+* Simplifica o fine-tuning: Em vez de treinar todas as camadas de um modelo grande, o PEFT ajusta apenas parâmetros específicos, como aqueles nas camadas de projeção (q_proj, k_proj, etc.), tornando o processo mais eficiente.
+* Economia de memória: Reduz o número de parâmetros ajustados, o que diminui a quantidade de memória necessária para o treinamento.
+* ***LoRA*** (Low-Rank Adaptation): Essa técnica é aplicada dentro do ***PEFT*** para otimizar o ajuste de parâmetros, introduzindo “pequenas matrizes” em camadas específicas do modelo, como as camadas de atenção.
 
 ### 4. Geração de Respostas:
 
 ### Considerações Finais
 Considerações Finais
-* Modelo LLaMA: Por questões de licenciamento e acesso, é importante certificar-se de que você possui os direitos e permissões para baixar e utilizar o LLaMA.
 * Treinamento: O tempo de treinamento pode variar muito dependendo do tamanho do dataset e dos recursos de hardware (idealmente, utilize GPUs ou TPUs).
 * Aprimoramentos: Você pode ajustar os hiperparâmetros (taxa de aprendizado, batch size, etc.) para melhorar a performance.
 

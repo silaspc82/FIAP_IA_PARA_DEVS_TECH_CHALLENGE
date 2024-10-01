@@ -84,14 +84,14 @@ Após aplicar o PEFT e LoRA, preparamos o processamento de prompts para treinar 
     * O dataset é carregado usando a função load_dataset, e depois a função add_instruction_column é aplicada para adicionar as instruções.
     * A função formatting_prompts_func é aplicada para formatar os prompts em um novo campo chamado "text".
 
-sse código utiliza a biblioteca SFTTrainer (Supervised Fine-Tuning Trainer) para realizar o fine-tuning de um modelo de linguagem com um dataset específico. O objetivo é ajustar o modelo para uma tarefa com um conjunto de dados supervisionados, configurando parâmetros importantes para o treinamento.
+Esse código utiliza a biblioteca SFTTrainer (Supervised Fine-Tuning Trainer) para realizar o fine-tuning de um modelo de linguagem com um dataset específico. O objetivo é ajustar o modelo para uma tarefa com um conjunto de dados supervisionados, configurando parâmetros importantes para o treinamento.
 
 Explicação do Código:
-	1.	Importações:
+1.	Importações:
 	* SFTTrainer: Responsável por treinar o modelo com supervisão (fine-tuning supervisionado).
 	* TrainingArguments: Define os argumentos e hiperparâmetros do treinamento.
 	* is_bfloat16_supported: Verifica se o hardware suporta o formato de ponto flutuante bfloat16 (para melhor eficiência de memória).
-	2.	Configuração do Trainer (SFTTrainer):
+2.	Configuração do Trainer (SFTTrainer):
 	* model: O modelo que será ajustado (fine-tuned).
 	* tokenizer: O tokenizador que converte o texto em tensores.
 	* train_dataset: O dataset que será usado para o treinamento.
@@ -99,7 +99,7 @@ Explicação do Código:
 	* max_seq_length: Comprimento máximo das sequências de entrada.
 	* dataset_num_proc: Número de processos paralelos usados para preparar o dataset.
 	* packing: Define se o dataset deve ser “compactado”, o que pode acelerar o treinamento para sequências curtas (desativado aqui).
-	3.	Configuração dos Argumentos de Treinamento (TrainingArguments):
+3.	Configuração dos Argumentos de Treinamento (TrainingArguments):
 	* per_device_train_batch_size = 2: Tamanho do lote por dispositivo (GPU ou CPU).
 	* gradient_accumulation_steps = 22: Acumula os gradientes por 22 passos antes de atualizar os pesos, o que permite simular um tamanho de lote maior com menos memória.
 	* warmup_steps = 5: Passos iniciais para o agendamento do aprendizado, ajudando a estabilizar o treinamento.
@@ -139,8 +139,9 @@ Esse código exemplifica o fluxo básico de gerar uma resposta automática de um
 
 
 ### Considerações Finais
-Considerações Finais
-* Treinamento: O tempo de treinamento pode variar muito dependendo do tamanho do dataset e dos recursos de hardware (idealmente, utilize GPUs ou TPUs).
-* Aprimoramentos: Você pode ajustar os hiperparâmetros (taxa de aprendizado, batch size, etc.) para melhorar a performance.
 
- 
+O tempo de treinamento de um modelo de IA é influenciado por diversos fatores, incluindo o tamanho do dataset, o número de épocas, o tamanho do batch e a complexidade do modelo. A relação entre esses fatores não é linear, e a Lei de Amdahl limita a aceleração obtida com mais recursos computacionais. Além disso, o tipo de dados e sua representação podem impactar significativamente o tempo de treinamento.
+
+O uso de GPUs é altamente recomendado para o treinamento de modelos de IA devido à sua capacidade de realizar cálculos em paralelo. No entanto, a escolha da GPU ideal depende do tamanho do modelo e do dataset. A quantidade de memória da GPU e o tipo de cálculo a serem realizados são fatores importantes a serem considerados. Outros aceleradores, como TPUs, podem oferecer ainda mais performance para tarefas específicas.
+
+O ajuste fino dos hiperparâmetros é crucial para obter um bom desempenho do modelo, e a validação cruzada é uma técnica fundamental para evitar overfitting. Técnicas como quantização, transfer learning e o uso de frameworks de deep learning otimizados podem ajudar a reduzir o tempo de treinamento e melhorar a performance do modelo.

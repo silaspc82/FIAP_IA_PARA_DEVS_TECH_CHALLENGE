@@ -61,7 +61,82 @@ Principais recursos do PEFT:
 * Economia de memória: Reduz o número de parâmetros ajustados, o que diminui a quantidade de memória necessária para o treinamento.
 * ***LoRA*** (Low-Rank Adaptation): Essa técnica é aplicada dentro do ***PEFT*** para otimizar o ajuste de parâmetros, introduzindo “pequenas matrizes” em camadas específicas do modelo, como as camadas de atenção.
 
+Após aplicar o PEFT e LoRA, preparamos o processamento de prompts para treinar um modelo de linguagem com base em um dataset de produtos.
+1. Define um template de prompt (alpaca_prompt):
+2. Um template onde a instrução, o título do produto (input), e sua descrição (output) são organizados.
+3. O template segue o formato:
+ 
+    ### Instruction:
+    {Instrução}
+    
+    ### Input:
+    {Título}
+    
+    ### Response:
+    {Descrição}
+ 
+ 4. Função formatting_prompts_func:
+    * Pega as colunas do dataset (instruction, title, content) e preenche o template alpaca_prompt.
+    * Gera uma string formatada para cada exemplo no dataset e adiciona o token de fim de sequência (EOS_TOKEN) para indicar que a geração de texto deve parar.
+ 5. Função add_instruction_column:
+    * Adiciona uma coluna de instrução ao dataset, fixando o valor da instrução como “Describe the product” para todos os exemplos.
+ 6. Carregamento e mapeamento do dataset:
+    * O dataset é carregado usando a função load_dataset, e depois a função add_instruction_column é aplicada para adicionar as instruções.
+    * A função formatting_prompts_func é aplicada para formatar os prompts em um novo campo chamado "text".
+
+sse código utiliza a biblioteca SFTTrainer (Supervised Fine-Tuning Trainer) para realizar o fine-tuning de um modelo de linguagem com um dataset específico. O objetivo é ajustar o modelo para uma tarefa com um conjunto de dados supervisionados, configurando parâmetros importantes para o treinamento.
+
+Explicação do Código:
+	1.	Importações:
+	* SFTTrainer: Responsável por treinar o modelo com supervisão (fine-tuning supervisionado).
+	* TrainingArguments: Define os argumentos e hiperparâmetros do treinamento.
+	* is_bfloat16_supported: Verifica se o hardware suporta o formato de ponto flutuante bfloat16 (para melhor eficiência de memória).
+	2.	Configuração do Trainer (SFTTrainer):
+	* model: O modelo que será ajustado (fine-tuned).
+	* tokenizer: O tokenizador que converte o texto em tensores.
+	* train_dataset: O dataset que será usado para o treinamento.
+	* dataset_text_field: A coluna do dataset que contém o texto para treinar.
+	* max_seq_length: Comprimento máximo das sequências de entrada.
+	* dataset_num_proc: Número de processos paralelos usados para preparar o dataset.
+	* packing: Define se o dataset deve ser “compactado”, o que pode acelerar o treinamento para sequências curtas (desativado aqui).
+	3.	Configuração dos Argumentos de Treinamento (TrainingArguments):
+	* per_device_train_batch_size = 2: Tamanho do lote por dispositivo (GPU ou CPU).
+	* gradient_accumulation_steps = 22: Acumula os gradientes por 22 passos antes de atualizar os pesos, o que permite simular um tamanho de lote maior com menos memória.
+	* warmup_steps = 5: Passos iniciais para o agendamento do aprendizado, ajudando a estabilizar o treinamento.
+	* num_train_epochs = 1: Define uma época completa para o treinamento.
+	* learning_rate = 2e-4: Taxa de aprendizado, que controla o quão rápido o modelo ajusta seus parâmetros.
+	* fp16/bf16: Define o uso de float16 ou bfloat16 dependendo do suporte de hardware, para economizar memória.
+	* max_grad_norm = 0.6: Limita o tamanho dos gradientes para evitar explosões de gradientes.
+	* optim = "adamw_8bit": Otimizador AdamW com quantização de 8 bits para economizar memória.
+	* weight_decay = 0.01: Regularização dos pesos para evitar overfitting.
+	* lr_scheduler_type = "linear": Usa um agendador linear para a taxa de aprendizado.
+	* group_by_length = True: Agrupa sequências de entrada por comprimento, o que pode melhorar a eficiência do treinamento.
+
+Resumo:
+
+Esse código configura e executa o fine-tuning de um modelo de linguagem utilizando a biblioteca SFTTrainer, ajustando parâmetros como taxa de aprendizado, acumulação de gradientes, e uso de memória otimizado (com bfloat16 ou fp16, e otimizador adamw_8bit). O objetivo é ajustar o modelo de forma eficiente, mesmo em hardware com recursos limitados, enquanto mantém a performance alta.
+
+
 ### 4. Geração de Respostas:
+Realizando Inferência
+utilizado para gerar texto com um modelo de linguagem treinado, como Llama, utilizando o FastLanguageModel para acelerar a inferência. Vamos dividi-lo em partes:
+	1.	FastLanguageModel.for_inference(model):
+	* Ativa o modo de inferência otimizado, que é até 2x mais rápido.
+	2.	Preparação dos inputs:
+	* O tokenizer é usado para converter um prompt em tensores que o modelo pode entender.
+	* O prompt é construído usando o formato alpaca_prompt, com uma instrução (“Describe the product”) e o título do produto (“Nice for Mice”).
+	* O campo output é deixado em branco porque o modelo vai gerar esse conteúdo.
+	* O tokenizer converte o texto em tensores PyTorch (return_tensors = "pt") e envia para a GPU (to("cuda")).
+	3.	Geração de texto:
+	* O modelo gera a continuação do texto com até 128 novos tokens, usando a função generate.
+	* TextStreamer é usado para exibir o texto gerado em tempo real enquanto o modelo o produz.
+
+Explicação Simples:
+	* Entrada: O modelo recebe um prompt com uma instrução (“Descreva o produto”) e o nome do produto (“Nice for Mice”).
+	* Inferência: O modelo usa esse prompt para gerar uma descrição do produto, fazendo a geração em tempo real e exibindo o resultado enquanto é produzido.
+
+Esse código exemplifica o fluxo básico de gerar uma resposta automática de um modelo treinado, usando técnicas otimizadas para inferência mais rápida e eficiente em hardware como GPUs.
+
 
 ### Considerações Finais
 Considerações Finais

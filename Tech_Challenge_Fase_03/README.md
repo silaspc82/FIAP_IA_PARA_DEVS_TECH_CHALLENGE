@@ -65,16 +65,16 @@ O método ***FastLanguageModel.get_peft_model(...)*** é usado para aplicar ***P
 Após aplicar as técnicas de PEFT (Parameter-Efficient Fine-Tuning) e LoRA (Low-Rank Adaptation), o próximo passo é preparar o modelo para o treinamento. Isso envolve o processamento dos prompts, que seguem um formato específico. Foi definido um template de prompt chamado alpaca_prompt, no qual três componentes essenciais são organizados:
 * Instrução (Instruction): O que o modelo deve fazer. Neste caso, a instrução é “Descreva o produto”.
 * Título do produto (Input): A entrada do prompt, representando o nome do produto que será descrito.
-* Descrição do produto (Output): O resultado esperado ou a descrição detalhada do produto, que o modelo deve gerar com base no título.
- 
-    ### Instruction:
-    {Instrução}
+* Descrição do produto (Output): O resultado esperado ou a descrição detalhada do produto, que o modelo deve gerar com base no título. 
+
+    > ### Instruction:
+    > {Instrução}
     
-    ### Input:
-    {Título}
+    > ### Input:
+    > {Título}
     
-    ### Response:
-    {Descrição}
+    > ### Response:
+    > {Descrição}
   
  4. Função formatting_prompts_func:
     * Pega as colunas do dataset (instruction, title, content) e preenche o template alpaca_prompt.

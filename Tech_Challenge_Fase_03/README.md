@@ -4,14 +4,15 @@
 * Silas Pereira Costa - RM355822
 * Wesley Gomes Santos - RM355677
 
-### Definição do Problema
-Executar o fine-tuning de um foundation model (Llama, BERT, MISTRAL etc.), utilizando o dataset "The AmazonTitles-1.3MM". O modelo treinado deverá:
-   * Receber perguntas com um contexto obtido por meio do arquivo json “trn.json” que está contido dentro do dataset.
-   * A partir do prompt formado pela pergunta do usuário sobre o título do produto, o modelo deverá gerar uma resposta baseada na pergunta do usuário trazendo como resultado do aprendizado do fine-tuning os dados da sua descrição.
+## Definição do Problema
+Executar o fine-tuning de um foundation model (Llama, BERT, MISTRAL etc.), utilizando o dataset "The AmazonTitles-1.3MM". 
+O modelo treinado deverá:
+* Receber perguntas com um contexto obtido por meio do arquivo json “trn.json” que está contido dentro do dataset.
+* A partir do prompt formado pela pergunta do usuário sobre o título do produto, o modelo deverá gerar uma resposta baseada na pergunta do usuário trazendo como resultado do aprendizado do fine-tuning os dados da sua descrição.
 
-### Fluxo de trabalho
+## Fluxo do trabalho
 
-### 1. Seleção Dataset:
+## 1. Seleção Dataset:
 
 O dataset selecionado foi o "The AmazonTitles-1.3MM" que contém mais de 1.3 milhões de exemplos de títulos de produtos da Amazon, além de informações relacionadas, como descrições e categorias dos produtos. A estrutura de dados principal segue o formato JSON, onde cada linha representa um produto e contém os seguintes campos:
    * uid: O código único que identifica o produto.
@@ -22,7 +23,7 @@ O dataset selecionado foi o "The AmazonTitles-1.3MM" que contém mais de 1.3 mil
 
 Utilizaremos os campos title e content desse dataset para as executar as técnicas de fine-tuning, permitindo que o modelo, após o treinamento, possa gerar descrições de produtos com base no título fornecido.
 
-### 2. Preparação do Dataset para Fine-Tunning:
+## 2. Preparação do Dataset para Fine-Tunning:
 
 Na preparação dos dados do Dataset foram realizadas os seguintes operações para limpeza, conversão e tratamento dos dados inválidos e duplicados no arquivo ***trn.json***:
    * Carregar um arquivo JSON contendo produtos com seus títulos e descrições.
@@ -34,7 +35,7 @@ Na preparação dos dados do Dataset foram realizadas os seguintes operações p
 
 Por fim, dividimos o arquivo, quebrando em arquivos menores com 100.000 linhas para agilizar o processamento de fine-tuninng no treinamento do modelo.
 
-### 2. Carregamento do Foundation Model:
+## 3. Carregamento do Foundation Model:
 
 O modelo base selecionado para o treinamento foi LLaMA "unsloth/tinyllama-chat-bnb-4bit" e o tokenizer usando a biblioteca transformers. O tokenizer será responsável por tokenizar as perguntas e respostas para que o modelo possa processar.
 
@@ -48,25 +49,25 @@ Usando o módulo ***FastLanguageModel*** da biblioteca ***Unsloth*** para carreg
 * use_gradient_checkpointing: Ativa o checkpointing de gradiente para economizar memória durante o treinamento.
 * dtype: Define o tipo de dado a ser usado nas operações do modelo (ex: float16, bfloat16).
 
-A biblioteca ***FastLanguageModel*** é um módulo específico da Unsloth, projetada para otimizar o treinamento e a inferência de grandes modelos de linguagem. Ela facilita o fine-tuning de modelos como Llama e Mistral ao oferecer suporte para quantização de parâmetros e economia de memória, o que torna o processo mais rápido e eficiente.
+O ***FastLanguageModel*** é um módulo específico da biblioteca ***Unsloth***, projetada para otimizar o treinamento e a inferência de grandes modelos de linguagem. Ela facilita o fine-tuning de modelos como Llama ao oferecer suporte para quantização de parâmetros e economia de memória, o que torna o processo mais rápido e eficiente.
 
-### 3. Execução do Fine-Tuning:
+## 4. Execução do Fine-Tuning:
 
 Aplicando o método ***LoRA*** (Low-Rank Adaptation) e ***PEFT*** (Parameter-Efficient Fine-Tuning), que permitem treinar modelos grandes com um número muito menor de parâmetros atualizados, acelerando o treinamento e diminuindo os requisitos de memória.
 
-O método FastLanguageModel.get_peft_model(...) é usado para aplicar PEFT (Parameter-Efficient Fine-Tuning) a grandes modelos de linguagem, como Llama. O PEFT permite que apenas uma pequena parte do modelo seja ajustada durante o fine-tuning, economizando tempo e memória, especialmente útil quando o modelo tem bilhões de parâmetros.
+O método ***FastLanguageModel.get_peft_model(...)*** é usado para aplicar ***PEFT (Parameter-Efficient Fine-Tuning)*** a grandes modelos de linguagem, como Llama. O PEFT permite que apenas uma pequena parte do modelo seja ajustada durante o fine-tuning, economizando tempo e memória, especialmente útil quando o modelo tem bilhões de parâmetros.
 
-Principais recursos do PEFT:
+***Principais recursos do PEFT:***
 * Simplifica o fine-tuning: Em vez de treinar todas as camadas de um modelo grande, o PEFT ajusta apenas parâmetros específicos, como aqueles nas camadas de projeção (q_proj, k_proj, etc.), tornando o processo mais eficiente.
 * Economia de memória: Reduz o número de parâmetros ajustados, o que diminui a quantidade de memória necessária para o treinamento.
 * ***LoRA*** (Low-Rank Adaptation): Essa técnica é aplicada dentro do ***PEFT*** para otimizar o ajuste de parâmetros, introduzindo “pequenas matrizes” em camadas específicas do modelo, como as camadas de atenção.
 
-Após aplicar o PEFT e LoRA, preparamos o processamento de prompts para treinar um modelo de linguagem com base em um dataset de produtos.
-1. Define um template de prompt (alpaca_prompt):
-2. Um template onde a instrução, o título do produto (input), e sua descrição (output) são organizados.
-3. O template segue o formato:
+Após aplicar as técnicas de PEFT (Parameter-Efficient Fine-Tuning) e LoRA (Low-Rank Adaptation), o próximo passo é preparar o modelo para o treinamento. Isso envolve o processamento dos prompts, que seguem um formato específico. Foi definido um template de prompt chamado alpaca_prompt, no qual três componentes essenciais são organizados:
+* Instrução (Instruction): O que o modelo deve fazer. Neste caso, a instrução é algo como “Descreva o produto”.
+* Título do produto (Input): A entrada do prompt, representando o nome do produto que será descrito.
+* Descrição do produto (Output): O resultado esperado ou a descrição detalhada do produto, que o modelo deve gerar com base no título.
  
-    ### Instruction:
+ `   ### Instruction:
     {Instrução}
     
     ### Input:
@@ -74,7 +75,7 @@ Após aplicar o PEFT e LoRA, preparamos o processamento de prompts para treinar 
     
     ### Response:
     {Descrição}
- 
+ `
  4. Função formatting_prompts_func:
     * Pega as colunas do dataset (instruction, title, content) e preenche o template alpaca_prompt.
     * Gera uma string formatada para cada exemplo no dataset e adiciona o token de fim de sequência (EOS_TOKEN) para indicar que a geração de texto deve parar.
@@ -86,7 +87,7 @@ Após aplicar o PEFT e LoRA, preparamos o processamento de prompts para treinar 
 
 Esse código utiliza a biblioteca SFTTrainer (Supervised Fine-Tuning Trainer) para realizar o fine-tuning de um modelo de linguagem com um dataset específico. O objetivo é ajustar o modelo para uma tarefa com um conjunto de dados supervisionados, configurando parâmetros importantes para o treinamento.
 
-Explicação do Código:
+Detalhameno do Código:
 1.	Importações:
 	* SFTTrainer: Responsável por treinar o modelo com supervisão (fine-tuning supervisionado).
 	* TrainingArguments: Define os argumentos e hiperparâmetros do treinamento.
@@ -114,22 +115,23 @@ Explicação do Código:
 
 Resumo:
 
-Esse código configura e executa o fine-tuning de um modelo de linguagem utilizando a biblioteca SFTTrainer, ajustando parâmetros como taxa de aprendizado, acumulação de gradientes, e uso de memória otimizado (com bfloat16 ou fp16, e otimizador adamw_8bit). O objetivo é ajustar o modelo de forma eficiente, mesmo em hardware com recursos limitados, enquanto mantém a performance alta.
+Nesse código realizamos a configuração e executamos o fine-tuning do modelo utilizando a biblioteca SFTTrainer, ajustando os parâmetros como taxa de aprendizado, acumulação de gradientes, e uso de memória otimizado (com bfloat16 ou fp16, e otimizador adamw_8bit). O objetivo é ajustar o modelo de forma eficiente, mesmo em hardware com recursos limitados, mantendo a performance na execução do treinamento.
 
 
 ### 4. Geração de Respostas:
-Realizando Inferência
-utilizado para gerar texto com um modelo de linguagem treinado, como Llama, utilizando o FastLanguageModel para acelerar a inferência. Vamos dividi-lo em partes:
-	1.	FastLanguageModel.for_inference(model):
-	* Ativa o modo de inferência otimizado, que é até 2x mais rápido.
-	2.	Preparação dos inputs:
-	* O tokenizer é usado para converter um prompt em tensores que o modelo pode entender.
-	* O prompt é construído usando o formato alpaca_prompt, com uma instrução (“Describe the product”) e o título do produto (“Nice for Mice”).
-	* O campo output é deixado em branco porque o modelo vai gerar esse conteúdo.
-	* O tokenizer converte o texto em tensores PyTorch (return_tensors = "pt") e envia para a GPU (to("cuda")).
-	3.	Geração de texto:
-	* O modelo gera a continuação do texto com até 128 novos tokens, usando a função generate.
-	* TextStreamer é usado para exibir o texto gerado em tempo real enquanto o modelo o produz.
+
+Utilizando o ***FastLanguageModel***  para acelerar a inferência no modelo. Vamos dividi-lo em partes:
+	1. FastLanguageModel.for_inference(model):
+		* Ativa o modo de inferência otimizado, que é até 2x mais rápido.
+	2. Preparação dos inputs:
+		* O tokenizer é usado para converter um prompt em tensores que o modelo pode entender.
+		* O prompt é construído usando o formato alpaca_prompt, com uma instrução (“Describe the product”) e o 
+  		título do produto (“Nice for Mice”).
+		* O campo output é deixado em branco porque o modelo vai gerar esse conteúdo.
+		* O tokenizer converte o texto em tensores PyTorch (return_tensors = "pt") e envia para a GPU (to("cuda")).
+	3. Geração de texto:
+		* O modelo gera a continuação do texto com até 128 novos tokens, usando a função generate.
+		* TextStreamer é usado para exibir o texto gerado em tempo real enquanto o modelo o produz.
 
 Explicação Simples:
 	* Entrada: O modelo recebe um prompt com uma instrução (“Descreva o produto”) e o nome do produto (“Nice for Mice”).

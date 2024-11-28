@@ -3,7 +3,33 @@ import mediapipe as mp
 import os
 from tqdm import tqdm
 from deepface import DeepFace
+import face_recognition
+import numpy as np
 
+
+def load_images_from_folder(folder):
+    known_face_encodings = []
+    known_face_names = []
+
+    # Percorrer todos os arquivos na pasta fornecida
+    for filename in os.listdir(folder):
+        # Verificar se o arquivo é uma imagem
+        if filename.endswith(".jpg") or filename.endswith(".png"):
+            # Carregar a imagem
+            image_path = os.path.join(folder, filename)
+            image = face_recognition.load_image_file(image_path)
+            # Obter as codificações faciais (assumindo uma face por imagem)
+            face_encodings = face_recognition.face_encodings(image)
+            
+            if face_encodings:
+                face_encoding = face_encodings[0]
+                # Extrair o nome do arquivo, removendo o sufixo numérico e a extensão
+                name = os.path.splitext(filename)[0][:-1]
+                # Adicionar a codificação e o nome às listas
+                known_face_encodings.append(face_encoding)
+                known_face_names.append(name)
+
+    return known_face_encodings, known_face_names
 
 def processa_video(video_path, output_path, exibir_frame_processado=False):
     # Inicializar o MediaPipe Pose
@@ -41,6 +67,8 @@ def processa_video(video_path, output_path, exibir_frame_processado=False):
         if not ret:
             break
 
+        # Analisar o frame para detectar faces e expressões
+        result_deepFace = DeepFace.analyze(frame, actions=['emotion'], enforce_detection=False)
     
         # Converter o frame para RGB
         rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -48,9 +76,22 @@ def processa_video(video_path, output_path, exibir_frame_processado=False):
         # Processar o frame para detectar a pose
         results_pose = pose.process(rgb_frame)
 
+        face_locations = face_recognition.face_locations(rgb_frame)
+        face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
 
-        # Analisar o frame para detectar faces e expressões
-        result_deepFace = DeepFace.analyze(frame, actions=['emotion'], enforce_detection=False)
+        # Inicializar uma lista de nomes para as faces detectadas
+        face_names = []
+        for face_encoding in face_encodings:
+            matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
+            name = "Desconhecido"
+            face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
+            best_match_index = np.argmin(face_distances)
+            if matches[best_match_index]:
+                name = known_face_names[best_match_index]
+            face_names.append(name)
+
+
+
 
         # Iterar sobre cada face detectada
         for face in result_deepFace:
@@ -65,6 +106,15 @@ def processa_video(video_path, output_path, exibir_frame_processado=False):
             
             # Escrever a emoção dominante acima da face
             cv2.putText(frame, dominant_emotion, (x-30, y), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)
+
+
+            # Associar a face detectada pelo DeepFace com as faces conhecidas
+            for (top, right, bottom, left), name in zip(face_locations, face_names):
+                if x <= left <= x + w and y <= top <= y + h:
+                    # Escrever o nome abaixo da face
+                    cv2.putText(frame, name, (x + 6, y + h - 6), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 255, 255), 2)
+                    break
+
 
         # Desenhar as anotações da pose no frame
         if results_pose.pose_landmarks:
@@ -85,6 +135,13 @@ def processa_video(video_path, output_path, exibir_frame_processado=False):
     cap.release()
     out.release()
     cv2.destroyAllWindows()
+
+
+# Caminho para a pasta de imagens com rostos conhecidos
+image_folder = 'images'
+
+# Carregar imagens e codificações
+known_face_encodings, known_face_names = load_images_from_folder(image_folder)
 
 # Caminho para o vídeo de entrada e saída
 script_dir = os.path.dirname(os.path.abspath(__file__))

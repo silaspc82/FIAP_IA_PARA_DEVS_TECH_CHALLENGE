@@ -25,6 +25,7 @@ def load_images_from_folder(folder):
                 face_encoding = face_encodings[0]
                 # Extrair o nome do arquivo, removendo o sufixo numérico e a extensão
                 name = os.path.splitext(filename)[0][:-1]
+                name = name.split("_")[0]
                 # Adicionar a codificação e o nome às listas
                 known_face_encodings.append(face_encoding)
                 known_face_names.append(name)
@@ -35,8 +36,9 @@ def processa_video(video_path, output_path, exibir_frame_processado=False):
     # Inicializar o MediaPipe Pose
     mp_pose = mp.solutions.pose
     pose = mp_pose.Pose(
-                        min_detection_confidence=0.3,
-                        min_tracking_confidence=0.3)
+                        # min_detection_confidence=0.3,
+                        # min_tracking_confidence=0.3
+                        )
     mp_drawing = mp.solutions.drawing_utils
 
     # Capturar vídeo do arquivo especificado
@@ -105,15 +107,15 @@ def processa_video(video_path, output_path, exibir_frame_processado=False):
             cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
             
             # Escrever a emoção dominante acima da face
-            cv2.putText(frame, dominant_emotion, (x-30, y), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)
+            cv2.putText(frame, dominant_emotion, (x-50, y + h + 60), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)
 
 
             # Associar a face detectada pelo DeepFace com as faces conhecidas
             for (top, right, bottom, left), name in zip(face_locations, face_names):
                 if x <= left <= x + w and y <= top <= y + h:
                     # Escrever o nome abaixo da face
-                    cv2.putText(frame, name, (x + 6, y + h - 6), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 255, 255), 2)
-                    break
+                    cv2.putText(frame, name, (x - 50 , y + h + 30), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 255, 255), 2)
+                    # break
 
 
         # Desenhar as anotações da pose no frame

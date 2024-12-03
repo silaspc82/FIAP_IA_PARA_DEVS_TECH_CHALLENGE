@@ -12,6 +12,7 @@ Foram utilizadas as bibliotecas:
 * **<ins>OpenCV</ins>** para manipular os frames do video e gerar o video de resultado após o processamento
 * **<ins>MediaPipe</ins>** para detecção dos rotos, gestos e movimentos
 * **<ins>DeepFace</ins>** para reconhecer as emoções no rostos detectados
+* **<ins>FaceRecognition</ins>** identificar os rotos e comparar com uma base de imagens para reconhecimento
 
 
 ## Fluxo do trabalho

@@ -42,3 +42,6 @@ Conteúdo da pasta "arquivos":
 * "relatorio_saida.txt":
     Arquivo contendo o resumo do processamento. 
     Nele contém as descrições do processamento de reconhecimento facial, expressões, movimentos e gestos.
+
+Conteúdo da pasta "images":
+* Contém as imagens de rostos utilizados para processamento do vídeo

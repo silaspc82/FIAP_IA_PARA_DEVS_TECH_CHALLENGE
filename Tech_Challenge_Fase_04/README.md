@@ -6,7 +6,7 @@
 
 ## COMPUTER VISION
 
-O objetivo deste estudo é realizar o reconhecimento facial em um video analisando as expressões faciais para detenções emocionais e descrever as atividades realizadas pelas pessoas durante o video.
+O objetivo deste estudo é realizar o reconhecimento facial em um video analisando as expressões faciais para detenção emocionais e descrever as atividades realizadas pelas pessoas identificadas durante a execução do video.
 
 
 ## Fluxo do trabalho
@@ -24,4 +24,4 @@ O objetivo deste estudo é realizar o reconhecimento facial em um video analisan
 * Crie um resumo automático das principais atividades e emoções detectadas no vídeo.
 
 ## Considerações Finais
-
+Foi possível detectar os rostos, procurar em um arquivo de fotos, idenficando os respectivos nomes das pessoas reconhecidas no video. Também foram identificados gestos e movimentos, bem como as emoções das rostos mapeados.

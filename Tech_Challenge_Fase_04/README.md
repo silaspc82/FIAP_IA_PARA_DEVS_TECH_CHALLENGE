@@ -8,11 +8,16 @@
 
 O objetivo deste estudo é realizar o reconhecimento facial em um video analisando as expressões faciais para detenção emocionais e descrever as atividades realizadas pelas pessoas identificadas durante a execução do video.
 
+Foram utilizadas as bibliotecas:
+* **<ins>OpenCV</ins>** para manipular os frames do video e gerar o video de resultado após o processamento
+* **<ins>MediaPipe</ins>** para detecção dos rotos, gestos e movimentos
+* **<ins>DeepFace</ins>** para reconhecer as emoções no rostos detectados
+
 
 ## Fluxo do trabalho
 
 ### 1. Reconhecimento facial: 
-- Identifique e marque os rostos presentes no vídeo.
+* Identifique e marque os rostos presentes no vídeo.
 
 ### 2. Análise de expressões emocionais: 
 * Analise as expressões emocionais dos rostos identificados.

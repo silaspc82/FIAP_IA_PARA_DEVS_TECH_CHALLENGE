@@ -29,4 +29,16 @@ Foram utilizadas as bibliotecas:
 * Crie um resumo automático das principais atividades e emoções detectadas no vídeo.
 
 ## Considerações Finais
-Foi possível detectar os rostos, procurar em um arquivo de fotos, idenficando os respectivos nomes das pessoas reconhecidas no video. Também foram identificados gestos e movimentos, bem como as emoções das rostos mapeados.
+Foi possível detectar os rostos, procurar em um arquivo de fotos, idenficando os respectivos nomes das pessoas reconhecidas no video. Também foram identificados gestos e movimentos, bem como as emoções dos rostos mapeados. Exceção daqueles rostos com visualização parcial ou angulo que não permitia o mapeamento.
+
+Conteúdo da pasta "arquivos":
+* "Unlocking Facial Recognition_ Diverse Activities Analysis.mp4"
+    Arquivo de entrada utilizado para o processo de computer vision.
+
+* "output_detection_and_recognition_Unlocking Facial Recognition_ Diverse Activities Analysis.mp4":
+    Arquivo de saída do processamento de computer vision.
+    Contém as marcações do reconhecimento facial, expressões, movimentos e gestos.
+    
+* "relatorio_saida.txt":
+    Arquivo contendo o resumo do processamento. 
+    Nele contém as descrições do processamento de reconhecimento facial, expressões, movimentos e gestos.

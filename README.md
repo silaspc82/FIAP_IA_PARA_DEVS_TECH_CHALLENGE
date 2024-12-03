@@ -26,3 +26,9 @@ FIAP_IA_PARA_DEVS_TECH_CHALLENGE/Tech_Challenge_Fase_02/motoboy-e-compras/
 ##### Caminho
 FIAP_IA_PARA_DEVS_TECH_CHALLENGE/Tech_Challenge_Fase_03/
 
+
+****
+# TECH CHALLENGE - 1IADT - Fase 4
+##### Caminho
+FIAP_IA_PARA_DEVS_TECH_CHALLENGE/Tech_Challenge_Fase_04/
+
